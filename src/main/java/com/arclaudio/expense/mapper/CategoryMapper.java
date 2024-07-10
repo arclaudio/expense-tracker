@@ -14,7 +14,7 @@ public class CategoryMapper {
     }
 
     // Map Category Entity to CategoryDto
-    public CategoryDTO mapToCategoryDto(Category category){
+    public static CategoryDTO mapToCategoryDto(Category category){
         return new CategoryDTO(
                 category.getId(),
                 category.getName()
