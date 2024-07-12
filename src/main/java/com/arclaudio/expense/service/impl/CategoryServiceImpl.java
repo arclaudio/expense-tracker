@@ -2,6 +2,7 @@ package com.arclaudio.expense.service.impl;
 
 import com.arclaudio.expense.dto.CategoryDTO;
 import com.arclaudio.expense.entity.Category;
+import com.arclaudio.expense.exception.ResourceNotFoundException;
 import com.arclaudio.expense.mapper.CategoryMapper;
 import com.arclaudio.expense.repository.CategoryRepository;
 import com.arclaudio.expense.service.CategoryService;
@@ -30,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO getCategoryById(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + categoryId));
         return CategoryMapper.mapToCategoryDto(category);
     }
 
@@ -46,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO updateCategory(Long categoryId, CategoryDTO categoryDto) {
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + categoryId));
         category.setName(categoryDto.name());
         Category updatedCategory = categoryRepository.save(category);
         return CategoryMapper.mapToCategoryDto(updatedCategory);
@@ -55,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + categoryId));
         categoryRepository.delete(category);
     }
 
